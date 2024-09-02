@@ -160,7 +160,7 @@ experiment:
     model_path:
       # <architecture>-<prior_training>_<suffix>
       mae:
-        mae-pt_trial: XXX
+        mae-pt_norm: PATH/TO/PRETRAINED_MAE_MODEL
 
   mae_settings:
 
