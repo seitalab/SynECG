@@ -1,0 +1,184 @@
+
+paths:
+
+  non_mae_templates:  
+    root: ../../baselines/resources/templates
+    
+    models:
+      resnet18: arch_resnet18_v01.yaml
+      embgru: arch_embgru_v01.yaml
+      emblstm: arch_emblstm_v01.yaml
+      mega: arch_mega_v01.yaml
+      luna: arch_luna_v01.yaml
+      transformer: arch_transformer_v02.yaml
+
+      s4: arch_s4_v01.yaml
+      resnet34: arch_resnet34_v01.yaml
+      resnet50: arch_resnet50_v01.yaml
+      effnetb0: arch_effnetb0_v01.yaml
+
+dx_sets:
+
+  dx_set01:
+    - ptbxl-af
+    - ptbxl-pvc
+    - ptbxl-aflt
+    - ptbxl-wpw
+
+  dx_set02: 
+    - syn-af
+    - syn-pvc
+    - syn-aflt
+    - syn-wpw
+
+models:
+
+  test:
+    test01:
+      models:
+        - mae-pt_norm
+        - resnet18-none
+      link_dx: False
+    test02:
+      models:
+        - mae-pt_
+        - resnet18-synclf_
+      link_dx: True
+
+  mae_models:
+
+    set01:
+      models:
+        - mae-pt_norm
+      link_dx: False
+
+    set02:
+      models: 
+        - mae-synclf_
+      link_dx: True
+
+    set03:
+      models: 
+        - mae-pt_
+      link_dx: True
+
+    set04:
+      models: 
+        - mae-pt_norm+
+      link_dx: True
+
+  baselines:
+
+    set01:
+      models:
+        - resnet18-none
+        - transformer-none
+        - mega-none
+        - luna-none
+      link_dx: False
+
+    set02:
+      models:
+        - embgru-none
+        - emblstm-none
+      link_dx: False
+
+    set03:
+      models:
+        - resnet18-synclf_
+        - transformer-synclf_
+        - mega-synclf_
+        - luna-synclf_
+      link_dx: True
+
+    set04:
+      models:
+        - embgru-synclf_
+        - emblstm-synclf_
+      link_dx: True
+
+    set05:
+      models:
+        - s4-none
+        - resnet34-none
+        - resnet50-none
+        - effnetb0-none
+      link_dx: False
+
+    set06:
+      models:
+        - s4-synclf_
+        - resnet34-synclf_
+        - resnet50-synclf_
+        - effnetb0-synclf_
+      link_dx: True
+
+dx_dataset_comb:
+
+  ptbxl-af: 
+      dx: af
+      pos: PTBXL-AFIB
+      neg: PTBXL-NORM
+  ptbxl-pvc: 
+      dx: pvc
+      pos: PTBXL-PVC
+      neg: PTBXL-NORM
+  # ptbxl-pac: 
+  #     dx: pac
+  #     pos: PTBXL-PAC
+  #     neg: PTBXL-NORM
+  ptbxl-aflt: 
+      dx: aflt
+      pos: PTBXL-AFLT
+      neg: PTBXL-NORM
+  ptbxl-wpw: 
+      dx: wpw
+      pos: PTBXL-WPW
+      neg: PTBXL-NORM
+
+  syn-af: 
+      dx: af
+      pos: syn_afib-01
+      neg: syn_ecg-01
+  syn-pvc: 
+      dx: pvc
+      pos: syn_pvc-01
+      neg: syn_ecg-01
+  # syn-pac: 
+  #     dx: pac
+  #     pos: syn_pac-01
+  #     neg: syn_ecg-01
+  syn-aflt: 
+      dx: aflt
+      pos: syn_aflt-01
+      neg: syn_ecg-01
+  syn-wpw: 
+      dx: wpw
+      pos: syn_wpw-01
+      neg: syn_ecg-01
+
+data_lim_set: 
+
+  data_lim01: 
+    - 1
+    - 2
+    - 5
+    - 10
+    - 25
+    - 50
+    - 100
+    - 250
+    - 500
+    - 1000
+  data_lim02:
+    - 1p
+    - 2p
+    - 5p
+    - 10p
+    - 25p
+    - 50p
+    - 100p
+    - 250p
+    - 500p
+    - 1000p
+

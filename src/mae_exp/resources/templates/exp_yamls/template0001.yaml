@@ -1,0 +1,102 @@
+# General
+modelname:
+  param_type: fixed
+  param_val: MODEL-ARCH
+target_dx: 
+  param_type: fixed
+  param_val: TARGET-DX
+num_lead:
+  param_type: fixed
+  param_val: 1
+n_workers:
+  param_type: fixed
+  param_val: 4
+
+# Finetuning-setting.
+finetune_target:
+  param_type: fixed
+  param_val: TARGET-PTMODEL
+freeze:
+  param_type: fixed
+  param_val: False
+
+
+# Dataset
+pos_dataset:
+  param_type: fixed
+  param_val: TARGET-DS-POS
+neg_dataset:
+  param_type: fixed
+  param_val: TARGET-DS-NEG
+data_lim:
+  param_type: fixed
+  param_val: null
+val_lim:
+  param_type: fixed
+  param_val: null
+
+# Hyperparameter Search
+num_trials:
+  param_type: fixed
+  param_val: 10000
+max_time:
+  param_type: fixed
+  param_val: 21600
+hps_epochs:
+  param_type: fixed
+  param_val: 250
+
+# Training settings
+epochs:
+  param_type: fixed
+  param_val: 500
+eval_every:
+  param_type: fixed
+  param_val: 5
+patience:
+  param_type: fixed
+  param_val: 5
+batch_size:
+  param_type: fixed
+  param_val: 256
+learning_rate: 
+  param_type: hps
+  param_val: 
+    - log_uniform
+    - 0.000005
+    - 0.005000
+optimizer:
+  param_type: fixed
+  param_val: adam
+
+# Data preprocessing
+max_duration:
+  param_type: fixed
+  param_val: 10
+freq:
+  param_type: fixed
+  param_val: 500
+downsample:
+  param_type: fixed
+  param_val: 1
+mask_ratio:
+  param_type: hps
+  param_val: 
+    - uniform
+    - 0
+    - 0.500000
+max_shift_ratio:
+  param_type: hps
+  param_val: 
+    - uniform
+    - 0
+    - 0.750000
+
+# Network
+backbone_out_dim: 
+  param_type: hps
+  param_val: 
+    - int_pow
+    - 4
+    - 10
+    - 2

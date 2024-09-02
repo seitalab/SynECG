@@ -1,0 +1,422 @@
+
+experiment:
+  
+  dataset_dx:
+    ptbxl:
+      # - vf
+      - af
+      - pvc
+      # - aflt
+      - pac
+      # - wpw
+      - irbbb
+      - crbbb
+      - std
+      - 3avb
+      - wpw
+      - asmi
+      - imi
+    
+      - lvh
+      - lafb
+      - isc
+      - iavb
+      - abqrs
+
+    g12ec:
+      # - vf
+      - af
+      - pvc
+
+      - lvh
+      - irbbb
+      - iavb
+      - pac
+      - rbbb
+
+    cpsc:
+      - af
+      - iavb
+      - pac
+      - pvc
+      - std
+      - rbbb
+
+  seed:
+    pretrain: 7
+    hps: 6
+    multirun:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    generate: 8
+
+  result_cols:
+    - score
+    - loss
+
+  path: 
+    save_root: PATH_TO_PROCESSED_DATA_SAVE_DIR/experiment
+    data_root: PATH_TO_PROCESSED_DATA_SAVE_DIR/data
+    yaml_loc: ./resources/exp_yamls
+    dgm_yaml_loc: ./resources/dgm_yamls
+    gen_yaml_loc: ./resources/gen_yamls
+    pretrain_yaml_loc: ./resources/pretrain_yamls
+    mae_eval_yaml_loc: ./resources/mae_eval_yamls
+
+  ft_settings:
+
+    reuse_params:
+
+      mae:
+        - downsample
+        - max_duration
+        - freq
+        - emb_dim
+        - depth
+        - heads
+        - dec_emb_dim
+        - dec_depth
+        - dec_heads
+        - mlp_ratio
+        - chunk_len
+      resnet18:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+      transformer:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+        - depth
+        - heads
+        - ff_dim
+        - lin_chunk_len
+      mega:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+        - depth
+        - heads
+        - ff_dim
+        - lin_chunk_len
+        - qkv_dim        
+      luna:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+        - depth
+        - heads
+        - ff_dim
+        - lin_chunk_len
+        - qkv_dim
+        - luna_context_len
+      embgru:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+        - rnn_depth 
+        - rnn_hidden
+        - lin_chunk_len
+      emblstm:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+        - rnn_depth 
+        - rnn_hidden
+        - lin_chunk_len
+      s4:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+        - depth
+        - heads
+        - ff_dim
+        - lin_chunk_len
+      resnet34:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+      resnet50:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim
+      effnetb0:
+        - downsample
+        - max_duration
+        - freq
+        - backbone_out_dim        
+
+    model_path:
+      # <architecture>-<prior_training>_<suffix>
+      mae:
+        mae-pt_trial: XXX
+
+  mae_settings:
+
+    reuse_params:
+      - downsample
+      - max_duration
+      - freq
+      - emb_dim
+      - depth
+      - heads
+      - dec_emb_dim
+      - dec_depth
+      - dec_heads
+      - mlp_ratio
+      - chunk_len
+
+    pt_model_path: 
+
+      pt1001: XXX
+
+pretrain_params:
+
+  mae:
+
+    search00: # for testing.
+      # n_updates: 500000 # 500k
+      total_samples: 1.0*1e5 # 100k
+      batch_size: 256
+      eval_every: 1.*1e4 #10k
+      learning_rate: 1.*1e-4
+
+    search01:
+      total_samples: 1.0*1e8 # 100M
+      batch_size: 256
+      eval_every: 1.*1e5 #100k
+      learning_rate: 1.*1e-4
+
+    eval00: # for testing
+      target_dx: af
+      pos_dataset: PTBXL-AFIB
+      neg_dataset: PTBXL-NORM
+      batch_size: 256
+      epochs: 5
+      learning_rate: 1.*1e-4
+      reuse_params:
+        - downsample
+        - max_duration
+        - freq
+        - emb_dim
+        - depth
+        - heads
+        - dec_emb_dim
+        - dec_depth
+        - dec_heads
+        - mlp_ratio
+        - chunk_len
+
+    eval01:
+      target_dx: af
+      pos_dataset: PTBXL-AFIB
+      neg_dataset: PTBXL-NORM
+      batch_size: 256
+      epochs: 500
+      learning_rate: 1.*1e-4
+      reuse_params:
+        - downsample
+        - max_duration
+        - freq
+        - emb_dim
+        - depth
+        - heads
+        - dec_emb_dim
+        - dec_depth
+        - dec_heads
+        - mlp_ratio
+        - chunk_len
+
+    main01:
+      total_samples: 1.0*1e9 # 1.0B
+      batch_size: 512
+      eval_every: 5*1e5 #5M
+      learning_rate: 1.*1e-4
+      save_model_every: 25*1e6 #25M
+
+  baselines:
+
+    prelim01: 
+
+generatives:
+
+  model_path:
+
+    vae:
+
+      v01: PATH_TO_VAE_MODEL
+
+    dcgan:
+
+      v01: PATH_TO_GAN_MODEL
+
+  data:
+
+    vae:
+
+      v01: PATH_TO_VAE_GEN_DATA
+
+    dcgan:
+
+      v01: PATH_TO_GAN_GEN_DATA
+
+  gans:
+    - dcgan
+
+  common:
+
+    base:
+      target_freq: 500
+      max_duration: 10
+      dataset: PTBXL-ALL
+      n_workers: 4
+      num_lead: 1
+      optimizer: adam
+      scheduler: cosine-01
+      mask_ratio: 0.1
+      max_shift_ratio: 0.25
+
+    prelim00:
+      batch_size: 256
+      learning_rate: 1.*1e-4
+      eval_every: 1.*1e4 #10k
+      save_model_every: 1.*1e4 #10k
+      total_samples: 1.*1e6 #100k
+      dump_every: 2.5*1e4 #25k
+      data_lim: 2000
+      val_lim: 1000
+
+      mask_ratio: 0.25
+      max_shift_ratio: 0.5
+
+
+    prelim01:
+      batch_size: 256
+      learning_rate: 1.*1e-6
+      eval_every: 1.*1e5 #10k
+      save_model_every: 1.*1e5 #10k
+      total_samples: 1.*1e7 #100k
+      dump_every: 2.5*1e5 #25k
+      data_lim: null
+      val_lim: null
+
+    main01:
+      batch_size: 256
+      learning_rate: 1.*1e-6
+      eval_every: 5.*1e5 #500k
+      save_model_every: 1.*1e6 #1M
+      total_samples: 1.*1e9 #1B
+      dump_every: 1*1e6 #1M
+
+      data_lim: null
+      val_lim: null
+
+    main02:
+      batch_size: 256
+      learning_rate: 1.*1e-6
+      eval_every: 5.*1e5 #500k
+      save_model_every: 1.*1e6 #1M
+      total_samples: 1*1e8 #100M
+      dump_every: 1*1e6 #1M
+
+      data_lim: null
+      val_lim: null
+
+
+split:
+
+  test:
+    seed: 123
+    size: 0.2
+
+  train_val:
+    seeds:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+    size: 0.2
+    
+# settings for data prep.
+settings:
+  
+  common:
+    syncfg_root: resources
+
+    duration: 10
+    target_freq: 500
+    val_size: 0.1
+
+    max_process_time: 5
+    n_syn: 
+      clf:
+        115000 # 100000 + a for training set.
+      pt:
+        230000 # 200k + a for training set.
+
+  cardially:
+
+    src: CARDIALLY
+
+  g12ec:
+
+    src: G12EC
+    dx_to_code:
+
+      NormalSinus: 426783006
+      Afib: 164889003
+      VPB: 17338001
+
+      LVH: 164873001
+      IRBBB: 713426002
+      IAVB: 270492004
+      PAC: 284470004
+      RBBB: 59118001     
+
+      ALL: 0
+    
+    lead_idx: 1
+
+  cpsc:
+
+    src: CPSC
+
+    reference: TrainingSet3/REFERENCE.csv
+
+    dx_to_index: # After shifting label with -1.
+      NORM: 0
+      AF: 1 # originally 2
+      IAVB: 2 # originally 3
+      LBBB: 3 # originally 4
+      RBBB: 4 # originally 5
+      PAC: 5 # originally 6
+      PVC: 6 # originally 7
+      STD: 7 # originally 8
+      STE: 8 # originally 9
+
+    lead_idx: 1
+
+  ptbxl:
+
+    src: PTBXL
+
+    lead_idx: 1
+
+  syn_ecg:
+
+    syncfg: syn_ecg-01

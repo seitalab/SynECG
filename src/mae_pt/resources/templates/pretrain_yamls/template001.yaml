@@ -1,0 +1,81 @@
+# General
+modelname:
+  param_type: fixed
+  param_val: mae_base
+num_lead:
+  param_type: fixed
+  param_val: 1
+pretrain_key:
+  param_type: fixed
+  param_val: main01
+n_workers:
+  param_type: fixed
+  param_val: 1
+clf_mode: 
+  param_type: fixed
+  param_val: null
+
+# Dataset
+dataset:
+  param_type: fixed
+  param_val: TARGET01
+data_lim:
+  param_type: fixed
+  param_val: 100000
+val_lim:
+  param_type: fixed
+  param_val: 10000
+
+# Training settings
+eval_every:
+  param_type: fixed
+  param_val: 5
+patience:
+  param_type: fixed
+  param_val: 50
+optimizer:
+  param_type: fixed
+  param_val: adam
+optimizer_patience:
+  param_type: fixed
+  param_val: 5
+
+# Data preprocessing
+max_duration:
+  param_type: fixed
+  param_val: 10
+freq:
+  param_type: fixed
+  param_val: 500
+downsample:
+  param_type: fixed
+  param_val: 1
+max_shift_ratio:
+  param_type: fixed
+  param_val: 0.5
+
+emb_dim:
+  param_type: fixed
+  param_val: 128
+depth:
+  param_type: fixed
+  param_val: 10
+heads:
+  param_type: fixed
+  param_val: 8
+dec_emb_dim:
+  param_type: fixed
+  param_val: 128
+dec_depth:
+  param_type: fixed
+  param_val: 2
+dec_heads:
+  param_type: fixed
+  param_val: 16
+mlp_ratio:
+  param_type: fixed
+  param_val: 4.
+chunk_len:
+  param_type: fixed
+  param_val: 50
+
