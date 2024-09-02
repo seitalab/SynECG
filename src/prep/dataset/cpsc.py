@@ -24,6 +24,7 @@ class CPSCPreparator(CardiallyPreparator):
         self.lead_idx = cfg["settings"]["cpsc"]["lead_idx"]
 
         self.save_loc = os.path.join(
+            cfg["path"]["processed_data"],
             cfg["settings"]["common"]["save_root"], 
             "CPSC" + f"-{target_dx}"
         )
@@ -99,6 +100,7 @@ class CPSCPreparator(CardiallyPreparator):
             signal (ndarray): numpy array of selected lead
         """
         target_path = os.path.join(
+            cfg["path"]["raw_data"],
             cfg["settings"]["cpsc"]["src"],
             "*", 
             target_file+".mat"
@@ -152,10 +154,8 @@ class CPSCPreparator(CardiallyPreparator):
 
 if __name__ == "__main__":
 
-    # target_dxs = ["VPB", "NormalSinus", "Afib"]
-    # target_dxs = ["ALL"]
     target_dxs = [
-        "NORM", "AF", "IAVB", "PAC", "PVC", "RBBB", "STD"
+        "NORM", "AF", "IAVB", "PAC", "PVC", "RBBB", "STD", "ALL"
     ]
     for target_dx in target_dxs:
         print(target_dx)

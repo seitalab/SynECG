@@ -21,6 +21,7 @@ class PTBXLPreparator(CardiallyPreparator):
         self.lead_idx = cfg["settings"]["ptbxl"]["lead_idx"]
 
         self.save_loc = os.path.join(
+            cfg["path"]["processed_data"],
             cfg["settings"]["common"]["save_root"], 
             "PTBXL" + f"-{target_dx}"
         )
@@ -36,7 +37,10 @@ class PTBXLPreparator(CardiallyPreparator):
 
         """
         df = pd.read_csv(
-            cfg["settings"]["ptbxl"]["src"] + "/../ptbxl_database.csv"
+            os.path.join(
+                cfg["path"]["raw_data"],
+                cfg["settings"]["ptbxl"]["src"],
+            ) + "/../ptbxl_database.csv"
         )
 
         if self.target_dx == "ALL":
@@ -58,6 +62,7 @@ class PTBXLPreparator(CardiallyPreparator):
         ptbxl_ecgs = []
         for target_id in tqdm(df_target.ecg_id.values):
             target_file = os.path.join(
+                cfg["path"]["raw_data"],
                 cfg["settings"]["ptbxl"]["src"], 
                 f"{int(target_id/1000)*1000:05d}",
                 f"{target_id:05d}_hr"
@@ -78,7 +83,10 @@ if __name__ == "__main__":
 
     L_Thres = ["AFIB", "PAC", "STD_", "ABQRS"]
 
-    target_dxs = ["NORM", "AFIB", "PVC", "PAC", "AFLT", "WPW"]
+    target_dxs = [
+        "NORM", "AFIB", "CRBBB", "IRBBB", "PAC", "PVC", "STD_",
+        "ASMI", "IMI", "LVH", "LAFB", "ISC_", "1AVB", "ABQRS", "ALL"
+    ]
     for target_dx in target_dxs:
         print(target_dx)
         thres = 0 if target_dx in L_Thres else 100
