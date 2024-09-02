@@ -10,7 +10,7 @@
 1. Real-world data.
 
 - Download CPSC, G12EC, and PTBXL dataset and place at `PATH_TO_ORIGINAL_DATA` 
-- Move to `src/prep/dataset` and run `cpsc.py`, `g12ec.py`, and `ptbxl.py`.
+- Move to `src/prep/dataset` and run `bash prep_data.sh`.
 
 2. Synthesized data.
 
@@ -20,8 +20,8 @@
 ## Baseline selection
 
 - Move to `src/baselines`
-- `cd resources` and run `python generate_yaml.py`
-- `cd ..` and run `python experiment.py --exp <exp_id>`
+- `cd resources` and run `python generate_yaml.py 1-19`
+- `cd ..` and run `python experiment.py --exp 1-19`
 
 ## MAE pretraining
 

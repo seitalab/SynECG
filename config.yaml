@@ -1,14 +1,14 @@
+path:
+  raw_data: /export/work/data/deep_learning/nonaka
+  processed_data: /export/work/users/nonaka/project/PubSynECG
 
 experiment:
   
   dataset_dx:
     ptbxl:
-      # - vf
       - af
       - pvc
-      # - aflt
       - pac
-      # - wpw
       - irbbb
       - crbbb
       - std
@@ -24,7 +24,6 @@ experiment:
       - abqrs
 
     g12ec:
-      # - vf
       - af
       - pvc
 
@@ -58,8 +57,8 @@ experiment:
     - loss
 
   path: 
-    save_root: PATH_TO_PROCESSED_DATA_SAVE_DIR/experiment
-    data_root: PATH_TO_PROCESSED_DATA_SAVE_DIR/data
+    save_root: experiment
+    data_root: dataset
     yaml_loc: ./resources/exp_yamls
     dgm_yaml_loc: ./resources/dgm_yamls
     gen_yaml_loc: ./resources/gen_yamls
@@ -334,7 +333,6 @@ generatives:
       data_lim: null
       val_lim: null
 
-
 split:
 
   test:
@@ -356,6 +354,7 @@ split:
 settings:
   
   common:
+    save_root: dataset
     syncfg_root: resources
 
     duration: 10
@@ -365,17 +364,14 @@ settings:
     max_process_time: 5
     n_syn: 
       clf:
-        115000 # 100000 + a for training set.
+        11500 # 100000 + a for training set.
       pt:
-        230000 # 200k + a for training set.
+        11500 # 10000 + a for training set.
 
-  cardially:
-
-    src: CARDIALLY
 
   g12ec:
 
-    src: G12EC
+    src: G12EC/WFDB_v230901
     dx_to_code:
 
       NormalSinus: 426783006
@@ -394,7 +390,7 @@ settings:
 
   cpsc:
 
-    src: CPSC
+    src: CPSC2018
 
     reference: TrainingSet3/REFERENCE.csv
 
@@ -413,7 +409,7 @@ settings:
 
   ptbxl:
 
-    src: PTBXL
+    src: PTBXL/1.0.1/ptbxl/records500
 
     lead_idx: 1
 

@@ -39,7 +39,10 @@ class ECGDataset(Dataset):
         """
         assert(datatype in ["train", "val", "test"])
         
-        self.data_loc = cfg["experiment"]["path"]["data_root"]
+        self.data_loc = os.path.join(
+            cfg["path"]["processed_data"],
+            cfg["experiment"]["path"]["data_root"]
+        )
         # Limit total number of dataset
         self.data_lim = data_lim // 2 if data_lim is not None else data_lim
 

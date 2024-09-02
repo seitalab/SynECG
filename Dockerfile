@@ -77,3 +77,5 @@ RUN pip install scipy==1.13.1
 RUN pip install timm==0.9.12
 RUN pip install tqdm
 RUN pip install pyYaml
+
+RUN pip install wfdb==3.3.0
