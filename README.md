@@ -26,7 +26,7 @@
 ## MAE pretraining
 
 - Move to `src/mae_pt`
-- `cd resources` and run `python prepare_pt_yamls.py`
+- `cd resources` and run `python prepare_pt_yamls.py 1p`
 - `cd ..` and run `python pretrain.py --pt <pretrain_id>`
 
 ## Abnormal ECG classification

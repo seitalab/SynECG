@@ -21,10 +21,10 @@ dataset:
   param_val: TARGET01
 data_lim:
   param_type: fixed
-  param_val: 100000
+  param_val: 1000
 val_lim:
   param_type: fixed
-  param_val: 10000
+  param_val: 100
 
 # Training settings
 eval_every:
