@@ -102,6 +102,7 @@ class ECGsynthesizer:
     def _prep_save_loc(self):
 
         self.save_loc = os.path.join(
+            cfg["path"]["processed_data"],
             cfg["settings"]["common"]["save_root"], 
             cfg["settings"][self.syn_type]["syncfg"]
         )

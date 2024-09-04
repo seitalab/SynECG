@@ -21,12 +21,18 @@ class G12ECPreparator(CardiallyPreparator):
         self.lead_idx = cfg["settings"]["g12ec"]["lead_idx"]
 
         self.save_loc = os.path.join(
+            cfg["path"]["processed_data"],
             cfg["settings"]["common"]["save_root"], 
             "G12EC" + f"-{target_dx}"
         )
         os.makedirs(self.save_loc, exist_ok=True)
 
-        self.targets = sorted(glob(cfg["settings"]["g12ec"]["src"] + "/*.hea"))
+        self.targets = sorted(glob(
+            os.path.join(
+                cfg["path"]["processed_data"],
+                cfg["settings"]["g12ec"]["src"])
+            )  + "/*.hea"
+        )
 
         if self.target_dx != "ALL":
             self._prep_dxs()
@@ -78,10 +84,11 @@ class G12ECPreparator(CardiallyPreparator):
     
 if __name__ == "__main__":
 
-    # target_dxs = ["VPB", "NormalSinus", "Afib"]
-    # target_dxs = ["ALL"]
-    # target_dxs = ["LVH", "IRBBB", "IAVB", "PAC", "RBBB"]
-    target_dxs = ["VPB"]
+    target_dxs = [
+        "NormalSinus", "Afib",
+        "LVH", "IRBBB", "IAVB", "PAC", 
+        "RBBB", "VPB", "ALL"
+    ]
     for target_dx in target_dxs:
         print(target_dx)
         preparator = G12ECPreparator(target_dx)

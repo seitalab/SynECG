@@ -14,12 +14,14 @@ from sklearn.metrics import (
 
 from run_hps import run_hps
 from run_train import run_train
-from codes.supports.utils import get_timestamp, SlackReporter
+from codes.supports.utils import get_timestamp
 from codes.supports.param_utils import ParameterManager
 
 cfg_file = "../../config.yaml"
 with open(cfg_file) as f:
-    config = yaml.safe_load(f)["experiment"]
+    config = yaml.safe_load(f)
+proc_data_root = config["path"]["processed_data"]
+config = config["experiment"]
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -61,8 +63,6 @@ class ExperimentManager:
         if debug:
             self.fixed_params.epochs = 2
             self.fixed_params.eval_every = 1
-        else:
-            self._prepare_reporter(exp_config_file)
         self.debug = debug
 
     def _select_device(self, device: str, use_cpu: bool):
@@ -84,29 +84,13 @@ class ExperimentManager:
             None
         """
         self.save_loc = os.path.join(
+            proc_data_root,
             config["path"]["save_root"],
             f"baseline{exp_id//100:02d}s",
             f"baseline{exp_id:04d}",
             get_timestamp()
         )
         os.makedirs(self.save_loc, exist_ok=True)
-
-    def _prepare_reporter(self, config_file: str):
-        """
-
-        Args:
-            config_file (str): _description_
-            debug (bool): _description_
-        """
-        self.reporter = SlackReporter()
-        parent_message = (
-            f"Starting experiment for {self.fixed_params.target_dx} on {self.device}\n"
-            f"Dataset: {self.fixed_params.pos_dataset} / {self.fixed_params.neg_dataset}\n"
-            f"Experiment config file: `{config_file}`\n"
-            f"Result save loc: `{self.save_loc}`"
-        )
-        self.reporter.post(parent_message)
-        self.parent_message = parent_message
 
     def _save_config(self, config_file: str):
         """
@@ -180,12 +164,6 @@ class ExperimentManager:
             self.save_loc, f"ResultTableHPS.csv")
         os.system(f"cp {csv_name} {savename}")
 
-        # Report to slack.
-        if not self.debug:
-            self.reporter.report(
-                f"Hyper parameter search done, result saved at {self.save_loc}", 
-                self.parent_message
-            )
 
         return savename
 
@@ -257,21 +235,10 @@ class ExperimentManager:
         # Search.
         csv_path = self.run_hps_experiment()
 
-        # Report.
-        if not self.debug:
-            self.reporter.report(
-                f"Search done, result saved at {csv_path}", 
-                self.parent_message
-            )
-        
         # Multi seed eval.
         result_file = self.run_evaluation_experiment(csv_path)
         
-        if not self.debug:
-            self.reporter.report(
-                f"Experiment done, result saved at {result_file}", 
-                self.parent_message
-            )
+
         # End
 
 if __name__ == "__main__":

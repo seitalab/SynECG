@@ -13,14 +13,6 @@ conditions = {
             {
                 "TARGET01": [
                     "syn_ecg-01",
-                    "syn_afib-01",
-                    "syn_aflt-01",
-                    "syn_pvc-01",
-                    "syn_wpw-01",
-                    "syn_ecg-01//syn_afib-01",
-                    "syn_ecg-01//syn_aflt-01",
-                    "syn_ecg-01//syn_pvc-01",
-                    "syn_ecg-01//syn_wpw-01",
                 ],
             }, 
         "template002":

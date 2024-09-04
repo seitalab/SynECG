@@ -3,9 +3,12 @@ from glob import glob
 
 import yaml
 
-root = "PATH_TO_PROCESSED_DATA_SAVE_DIR"
-# id_range = range(1, 85)
-id_range = range(3001, 3048)
+cfg_file = "../../../config.yaml"
+with open(cfg_file) as f:
+    config = yaml.safe_load(f)["experiment"]
+
+root = config["path"]["processed_data"]
+id_range = range(1, 85)
 
 def load_cfg(yaml_id):
     """

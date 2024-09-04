@@ -9,7 +9,6 @@ import numpy as np
 from tqdm import tqdm
 from torch.utils.data import Dataset
 
-# root = "/home/nonaka/git/ecg_pj/SynthesizedECG/data"
 cfg_file = "../../config.yaml"
 with open(cfg_file, "r") as f:
     cfg = yaml.safe_load(f)
@@ -41,7 +40,10 @@ class ECGDataset(Dataset):
         """
         assert(datatype in ["train", "val", "test"])
         
-        self.data_loc = cfg["experiment"]["path"]["data_root"]
+        self.data_loc = os.path.join(
+            cfg["path"]["processed_data"],
+            cfg["experiment"]["path"]["data_root"]
+        )
 
         # Limit total number of dataset    
         self.data, self.label = [], []

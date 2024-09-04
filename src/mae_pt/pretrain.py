@@ -47,8 +47,6 @@ class PretrainManager(ExperimentManager):
         if debug:
             self.fixed_params.epochs = 2
             self.fixed_params.eval_every = 1
-        # else:
-        #     self._prepare_reporter(pt_config_file)
         self.debug = debug
 
     def _update_fixed_params(self, fixed_params):
@@ -89,6 +87,7 @@ class PretrainManager(ExperimentManager):
             None
         """
         self.save_loc = os.path.join(
+            config["path"]["processed_data"],
             config["experiment"]["path"]["save_root"],
             f"mae-pt{pretrain_id:04d}"[:-2]+"s",
             f"pt{pretrain_id:04d}",

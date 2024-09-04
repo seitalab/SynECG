@@ -4,12 +4,10 @@ from typing import List
 import yaml
 import numpy as np
 import pandas as pd
-# from slack_sdk import WebClient
 
 cfg_file = "../../config.yaml"
 with open(cfg_file) as f:
     config = yaml.safe_load(f)
-slack_config = config["slack"]
 
 def get_timestamp() -> str:
     """
@@ -42,59 +40,6 @@ def calc_class_weight(
     class_weight = negative_per_class / positive_per_class
 
     return class_weight
-
-class SlackReporter:
-
-    def __init__(self):
-        """
-        Args:
-            None
-        Returns:
-            None
-        """        
-        self.client = WebClient(
-            token=slack_config["token"]
-        )
-        self.channel_id = slack_config["channel_id"]
-
-    def report(
-        self, 
-        message: str,
-        parent_message: str, 
-    ) -> None:
-        """
-        Args:
-            message (str): 
-            parent_message (str): 
-        Returns:
-            None
-        """
-        history = self.client.conversations_history(
-            channel=self.channel_id
-        )
-        posts = history["messages"][:slack_config["max_past"]]
-
-        for post in posts:
-            if post["text"] != parent_message:
-                continue
-            self.client.chat_postMessage(
-                channel=self.channel_id,
-                thread_ts=post["ts"],
-                text=message
-            )
-            break
-    
-    def post(self, message: str):
-        """
-        Args:
-            message (str): 
-        Returns:
-            None
-        """
-        self.client.chat_postMessage(
-            text=message, 
-            channel=self.channel_id,
-        )
 
 class ResultManager:
 
